@@ -213,12 +213,11 @@ export type PathValue<T, L extends Path<T, L>> = L extends IPathArray<T, L>
 export const getFromPath = <T extends any, P extends Path<T, P>>(
   object: T,
   path: P,
-) => {
-  return Array.isArray(path)
-    ? // Find value if exist return otherwise return undefined value;
+): PathValue<T, P> => 
+  Array.isArray(path)
+    ? // Find value;
       (path.reduce(
         (prevObj, key) => prevObj && prevObj[key],
         object,
-      ) as PathValue<T, P>) || undefined
+      ))
     : object[path as keyof T];
-};
